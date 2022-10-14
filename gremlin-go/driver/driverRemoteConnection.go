@@ -21,10 +21,11 @@ package gremlingo
 
 import (
 	"crypto/tls"
-	"github.com/google/uuid"
-	"golang.org/x/text/language"
 	"runtime"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/text/language"
 )
 
 // DriverRemoteConnectionSettings are used to configure the DriverRemoteConnection.
@@ -217,6 +218,15 @@ func (driver *DriverRemoteConnection) CreateSession(sessionId ...string) (*Drive
 		return nil, err
 	}
 	driver.spawnedSessions = append(driver.spawnedSessions, drc)
+	return drc, nil
+}
+
+func (driver *DriverRemoteConnection) CreateSessionWithTraversalSource(traversalSource string, sessionId ...string) (*DriverRemoteConnection, error) {
+	drc, err := driver.CreateSession(sessionId...)
+	if err != nil {
+		return nil, err
+	}
+	drc.client.traversalSource = traversalSource
 	return drc, nil
 }
 
