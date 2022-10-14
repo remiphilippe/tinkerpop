@@ -35,6 +35,11 @@ type Traversal struct {
 	results  ResultSet
 }
 
+func (t *Traversal) WithTraversalSource(name string) *Traversal {
+	t.remote.client.traversalSource = name
+	return t
+}
+
 // ToList returns the result in a list.
 func (t *Traversal) ToList() ([]*Result, error) {
 	if t.remote == nil {

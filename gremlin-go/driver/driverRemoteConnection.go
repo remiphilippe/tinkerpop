@@ -160,6 +160,11 @@ func (driver *DriverRemoteConnection) Close() {
 	driver.isClosed = true
 }
 
+func (driver *DriverRemoteConnection) WithTraversalSource(name string) *DriverRemoteConnection {
+	driver.client.traversalSource = name
+	return driver
+}
+
 // Submit sends a string traversal to the server.
 func (driver *DriverRemoteConnection) Submit(traversalString string) (ResultSet, error) {
 	result, err := driver.client.Submit(traversalString)
